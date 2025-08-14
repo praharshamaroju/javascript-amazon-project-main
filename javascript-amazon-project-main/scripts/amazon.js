@@ -73,7 +73,7 @@ button.addEventListener('click',()=>{
   }
   });
   if(matchingitem){
-    matchingitem.quantity+=1;
+    matchingitem.quantity= Number(matchingitem.quantity)+1;
   }
   else{
 
@@ -83,7 +83,14 @@ button.addEventListener('click',()=>{
   quantity:1  
 });
 }
+let cartQuantity = 0;
+cart.forEach((item)=> {
+ cartQuantity += Number(item.quantity) || 0 ;
+});
 
-console.log(cart);
+
+
+document.querySelector('.js-cart-quantity').innerHTML=cartQuantity;
+
 });
 });
