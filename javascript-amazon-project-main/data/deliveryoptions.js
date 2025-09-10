@@ -9,5 +9,10 @@ export const deliveryoptions = [{
   deliverydays:4,
   pricecents:499
   },
+  {
+    id:'3',
+    deliverydays:1,
+    pricecents:999
+  }
 
 ];
