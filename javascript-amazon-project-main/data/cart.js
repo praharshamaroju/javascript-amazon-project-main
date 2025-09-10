@@ -60,3 +60,17 @@ if(item.productId != productId){
 
   savetostorage();
 }
+
+export function updatedeliveryoption(productId,deliveryOptionId){
+
+  let matchingItem;
+
+      cart.forEach((item) => {
+        if (productId === item.productId) {
+          matchingItem = item;
+        }
+      });
+      matchingItem.deliveryOptionId=deliveryOptionId
+
+      savetostorage();
+}

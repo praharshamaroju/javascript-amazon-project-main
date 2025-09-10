@@ -1,6 +1,6 @@
 import { products } from '../data/products.js';
 
-import { cart,removeFromCart } from '../data/cart.js';
+import { cart,removeFromCart,updatedeliveryoption } from '../data/cart.js';
 import { formatCurrency } from './utils/money.js';
 import {hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import  dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
@@ -48,7 +48,7 @@ cartsummaryHTML+=
 `
 <div class="cart-item-container 
 js-cart-item-container-${matchingProduct.id}">
-          <div class="delivery-date">
+          <div class="delivery-date ">
             Delivery date: ${datestring}
           </div>
 
@@ -109,7 +109,10 @@ deliveryoptions.forEach((deliveryoption)=>{
 
 
      html+=  `
-        <div class="delivery-option">
+        <div class="delivery-option js-delivery-option"
+          data-product-id="${matchingProduct.id}"
+          data-delivery-option-id ="${deliveryoption.id}"
+          >
                   <input type="radio"
                    ${ischecked ?'checked':''}
                     class="delivery-option-input"
@@ -143,4 +146,12 @@ const container = document.querySelector(`.js-cart-item-container-${productId}`)
 container.remove();
   });
 
+  document.querySelectorAll('.js-delivery-option')
+  .forEach((element)=>{
+element.addEventListener('click',()=>{
+  const {productId,deliveryOptionId}=element.dataset;
+  updatedeliveryoption(productId,deliveryOptionId);
+  location.reload();
+});
+  });
 });
