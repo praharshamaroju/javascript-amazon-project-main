@@ -5,9 +5,9 @@ import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { deliveryoptions,getdeliveryoption } from '../../data/deliveryoptions.js';
 import { getproduct } from '../../data/products.js';
+import { renderpaymentsummary } from './paymentsummary.js';
 
 
-hello();
 
 export function renderordersummary() {
   let cartsummaryHTML = '';
@@ -68,8 +68,13 @@ export function renderordersummary() {
     link.addEventListener('click', () => {
       const productId = link.dataset.productId;
       removeFromCart(productId);
+      
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
       container.remove();
+
+
+      renderpaymentsummary();
+
     });
   });
 
@@ -79,6 +84,8 @@ export function renderordersummary() {
       const { productId, deliveryOptionId } = element.dataset;
       updatedeliveryoption(productId, deliveryOptionId);
       renderordersummary(); // re-render with new date
+
+      renderpaymentsummary();
     });
   });
 }
