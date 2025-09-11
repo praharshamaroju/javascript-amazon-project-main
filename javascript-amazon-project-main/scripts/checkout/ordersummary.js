@@ -3,7 +3,9 @@ import { cart, removeFromCart, updatedeliveryoption } from '../../data/cart.js';
 import { formatCurrency } from '../utils/money.js';
 import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-import { deliveryoptions } from '../../data/deliveryoptions.js';
+import { deliveryoptions,getdeliveryoption } from '../../data/deliveryoptions.js';
+import { getproduct } from '../../data/products.js';
+
 
 hello();
 
@@ -13,21 +15,15 @@ export function renderordersummary() {
   cart.forEach((item) => {
     const productId = item.productId;
 
-    let matchingProduct;
-    products.forEach((product) => {
-      if (product.id === productId) {
-        matchingProduct = product;
-      }
-    });
+
+  
+    const matchingProduct = getproduct(productId);
+   
 
     const deliveryOptionId = item.deliveryOptionId;
-    let deliveryoption;
-    deliveryoptions.forEach((option) => {
-      if (option.id === deliveryOptionId) {
-        deliveryoption = option;
-      }
-    });
-
+    
+    const deliveryoption = getdeliveryoption(deliveryOptionId);
+    
     const today = dayjs();
     const deliveryDate = today.add(deliveryoption.deliverydays, 'days');
     const datestring = deliveryDate.format('dddd,MMMM D');
@@ -95,9 +91,9 @@ function deliveryoptionsHTML(matchingProduct, item) {
     const datestring = deliveryDate.format('dddd,MMMM D');
 
     const pricestring =
-      deliveryoption.pricecents === 0
+      deliveryoption.priceCents === 0
         ? 'FREE'
-        : `$${formatCurrency(deliveryoption.pricecents)} - `;
+        : `$${formatCurrency(deliveryoption.priceCents)} - `;
 
     const ischecked = deliveryoption.id === item.deliveryOptionId;
 
