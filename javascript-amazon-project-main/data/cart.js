@@ -1,6 +1,11 @@
 import { products } from "./products.js";
 
-export let cart = JSON.parse(localStorage.getItem('cart'));
+export let cart;
+
+loadfromstorage();
+
+export function loadfromstorage(){
+  cart = JSON.parse(localStorage.getItem('cart'));
 if(!cart){
       cart = [
   {
@@ -17,7 +22,7 @@ if(!cart){
 
 }
 
-
+}
 
 function savetostorage(){
   localStorage.setItem('cart',JSON.stringify(cart));
